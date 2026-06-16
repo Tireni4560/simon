@@ -13,7 +13,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
@@ -27,6 +27,12 @@
         </div>
         <div class="loader-line"></div>
     </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#hero" class="navbar-logo">Tirenify</a>
+        <a href="mailto:daniel@tirenify.com" class="navbar-cta">Contact</a>
+    </nav>
 
     <!-- Main Content -->
     <main id="main-content" class="hidden">
@@ -48,7 +54,7 @@
                         <strong>Tirenify</strong> is changing that.
                     </p>
                     <div class="hero-cta fade-in">
-                        <a href="#problem" class="btn btn-primary">
+                        <a href="#problem" class="btn btn-primary btn-large">
                             <span>Explore the Vision</span>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M7 17L17 7M17 7H7M17 7V17"/>
@@ -238,71 +244,77 @@
                 
                 <div class="roadmap">
                     <div class="roadmap-line"></div>
-                    
-                    <div class="roadmap-item reveal">
-                        <div class="roadmap-marker active">
-                            <span class="marker-dot"></span>
-                            <span class="marker-status">Live</span>
+                    <div class="roadmap-grid">
+                        <div class="roadmap-item reveal">
+                            <div class="roadmap-marker">
+                                <span class="marker-dot"></span>
+                                <span class="marker-status">Live</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>Phase 1</h3>
+                                <p>Breach Awareness - Users check if their email is in known breaches.</p>
+                                <span class="phase-tag current">Current</span>
+                            </div>
                         </div>
-                        <div class="roadmap-content">
-                            <h3>Phase 1: Breach Awareness</h3>
-                            <p>Users check if their email is in known breaches and understand the scope of exposure.</p>
-                            <span class="phase-tag">Current</span>
+                        
+                        <div class="roadmap-item reveal">
+                            <div class="roadmap-marker">
+                                <span class="marker-dot"></span>
+                                <span class="marker-status">Next</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>Phase 2</h3>
+                                <p>Proactive Monitoring - Continuous alerts when new breaches occur.</p>
+                                <span class="phase-tag">Coming</span>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="roadmap-item reveal">
-                        <div class="roadmap-marker">
-                            <span class="marker-dot"></span>
-                            <span class="marker-status">Coming</span>
+                        
+                        <div class="roadmap-item reveal">
+                            <div class="roadmap-marker">
+                                <span class="marker-dot"></span>
+                                <span class="marker-status">Future</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>Phase 3</h3>
+                                <p>Privacy Tools - Password management and encrypted communication.</p>
+                                <span class="phase-tag">Future</span>
+                            </div>
                         </div>
-                        <div class="roadmap-content">
-                            <h3>Phase 2: Proactive Monitoring</h3>
-                            <p>Continuous monitoring of user data, alerts when new breaches occur, and automated guidance on protective steps.</p>
+                        
+                        <div class="roadmap-item reveal">
+                            <div class="roadmap-marker">
+                                <span class="marker-dot"></span>
+                                <span class="marker-status">Future</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>Phase 4</h3>
+                                <p>Account Protection - 2FA helpers and recovery services.</p>
+                                <span class="phase-tag">Future</span>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="roadmap-item reveal">
-                        <div class="roadmap-marker">
-                            <span class="marker-dot"></span>
-                            <span class="marker-status">Future</span>
+                        
+                        <div class="roadmap-item reveal">
+                            <div class="roadmap-marker">
+                                <span class="marker-dot"></span>
+                                <span class="marker-status">Long-term</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>Phase 5</h3>
+                                <p>Enterprise Solutions - Security tools for African businesses.</p>
+                                <span class="phase-tag">Future</span>
+                            </div>
                         </div>
-                        <div class="roadmap-content">
-                            <h3>Phase 3: Privacy Tools</h3>
-                            <p>Password management, encrypted communication tools, and privacy-first account management features.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="roadmap-item reveal">
-                        <div class="roadmap-marker">
-                            <span class="marker-dot"></span>
-                            <span class="marker-status">Future</span>
-                        </div>
-                        <div class="roadmap-content">
-                            <h3>Phase 4: Account Protection</h3>
-                            <p>Advanced threat detection, two-factor authentication helpers, and account recovery services.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="roadmap-item reveal">
-                        <div class="roadmap-marker">
-                            <span class="marker-dot"></span>
-                            <span class="marker-status">Long-term</span>
-                        </div>
-                        <div class="roadmap-content">
-                            <h3>Phase 5: Enterprise Solutions</h3>
-                            <p>Security tools for African businesses, compliance support, and localized enterprise protection.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="roadmap-item reveal">
-                        <div class="roadmap-marker">
-                            <span class="marker-dot"></span>
-                            <span class="marker-status">Evolving</span>
-                        </div>
-                        <div class="roadmap-content">
-                            <h3>Phase 6+: User-Driven Evolution</h3>
-                            <p>Building additional products based on user needs, expanding beyond security as trust infrastructure grows.</p>
+                        
+                        <div class="roadmap-item reveal">
+                            <div class="roadmap-marker">
+                                <span class="marker-dot"></span>
+                                <span class="marker-status">Evolving</span>
+                            </div>
+                            <div class="roadmap-content">
+                                <h3>Phase 6+</h3>
+                                <p>User-Driven Evolution - Expanding as trust infrastructure grows.</p>
+                                <span class="phase-tag">Future</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -337,8 +349,7 @@
                         <div class="founder-story reveal">
                             <p>
                                 I'm building Tirenify with essentially <strong>zero capital</strong>, 
-                                funding development through freelancing and client work. But what I 
-                                lack in resources, I make up for in <strong>conviction</strong>.
+                                but what I lack in resources, I make up for in <strong>conviction</strong>.
                             </p>
                             <p>
                                 I believe Africa deserves world-class digital security infrastructure 
@@ -366,48 +377,312 @@
             </div>
         </section>
 
-        <!-- Funding Section -->
+        <!-- Discovery Section -->
+        <section id="discovery" class="section discovery-section">
+            <div class="container">
+                <div class="discovery-content">
+                    <div class="discovery-header reveal">
+                        <span class="section-label">Why I'm Here</span>
+                        <h2 class="section-title section-title-dark">How I Found You</h2>
+                    </div>
+                    
+                    <div class="discovery-quote reveal">
+                        <div class="quote-block">
+                            <p class="quote-text">
+                                "Going through your pages (TikTok, YouTube and all) I thought to myself:
+                            </p>
+                            <p class="quote-text highlight">
+                                'The people, the students in the streets of the UK are lucky to have someone like you. 
+                                There's no way you're ever going to be going around asking people what their dreams are 
+                                here in Nigeria. And even if you somehow did, there's definitely no way you'd be in the 
+                                part of Nigeria I reside in.'
+                            </p>
+                            <p class="quote-text">
+                                And that's why I decided I would be the one answering your questions without being asked.
+                            </p>
+                            <p class="quote-text accent">
+                                That's why I built this.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="discovery-note reveal">
+                        <p>
+                            Your philosophy aligns with what I'm building. So I created this pitch to show you clearly 
+                            what Tirenify is, why it matters, and how we can partner to make it real.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Funding Reality Section -->
         <section id="funding" class="section funding-section">
             <div class="container">
                 <div class="section-header">
-                    <span class="section-label">Resourcefulness</span>
-                    <h2 class="section-title">How This Gets Funded</h2>
+                    <span class="section-label">The Reality</span>
+                    <h2 class="section-title">Why I Need Your Help</h2>
                 </div>
                 
                 <div class="funding-content">
                     <div class="funding-text reveal">
                         <p class="lead">
-                            Building world-class products requires resources. 
-                            I'm not asking for handouts — I'm <strong>actively funding development myself</strong>.
+                            I've tried freelancing to fund Tirenify. It hasn't worked out.
                         </p>
                         <p>
-                            Through <strong>freelancing as a web developer and landing page designer</strong>, 
-                            I use income from client work to finance Tirenify's development. This approach 
-                            lets me stay independent while proving I can execute.
+                            The problem with bootstrapping a platform like this:
+                            it requires full-time focus and attention. Building while freelancing 
+                            means doing both halfway. Neither the platform nor the clients get your best.
+                            Progress slows to a crawl.
                         </p>
                         <p>
-                            This isn't a desperate founder asking for charity. This is a builder 
-                            <strong>actively funding his vision</strong> while demonstrating the ability 
-                            to deliver for clients and build products simultaneously.
+                            The reality: I don't have money to fund this project. 
+                            I don't have a trust fund or wealthy family backing. 
+                            I have a working product, a clear vision, and conviction.
+                        </p>
+                        <p>
+                            That's not enough in this economy. You need capital.
+                        </p>
+                        
+                        <div class="funding-highlight">
+                            <p>
+                                "Korede is ready to work. I'm ready to build. 
+                                But we need resources to move from Phase 1 to Phase 2."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What's Limiting Me Now Section -->
+        <section id="constraints" class="section constraints-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">The Reality</span>
+                    <h2 class="section-title">What's Limiting Me Right Now</h2>
+                </div>
+                
+                <div class="constraints-content">
+                    <div class="constraints-intro reveal">
+                        <p class="lead">
+                            Building world-class infrastructure with zero capital is possible... but slow. 
+                            Every limitation below adds months to the timeline.
                         </p>
                     </div>
                     
-                    <div class="funding-portfolio reveal">
-                        <div class="portfolio-card">
-                            <div class="portfolio-preview">
-                                <div class="portfolio-badge">Portfolio</div>
-                                <h4>Daniel's Design Work</h4>
-                                <p>See the quality of work that funds Tirenify's development</p>
-                                <a href="https://dan-lac.vercel.app/" target="_blank" rel="noopener" class="btn btn-secondary">
-                                    <span>View Portfolio</span>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-                                        <polyline points="15 3 21 3 21 9"/>
-                                        <line x1="10" y1="14" x2="21" y2="3"/>
-                                    </svg>
-                                </a>
+                    <div class="constraints-grid">
+                        <div class="constraint-card reveal">
+                            <div class="constraint-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="2" y1="12" x2="22" y2="12"/>
+                                    <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+                                </svg>
+                            </div>
+                            <h3>Limited Internet</h3>
+                            <p>Data in Nigeria costs significantly more than developed markets. Can't run continuous campaigns or test at scale. Video streaming and large uploads are costly.</p>
+                        </div>
+                        
+                        <div class="constraint-card reveal">
+                            <div class="constraint-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <line x1="12" y1="1" x2="12" y2="23"/>
+                                    <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                                </svg>
+                            </div>
+                            <h3>No Marketing Capital</h3>
+                            <p>Tirenify grows only through organic word-of-mouth. Can't run paid campaigns or strategic partnerships. User acquisition is limited by what I can share manually.</p>
+                        </div>
+                        
+                        <div class="constraint-card reveal">
+                            <div class="constraint-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 010 7.75"/>
+                                </svg>
+                            </div>
+                            <h3>Building Solo</h3>
+                            <p>All product development, marketing, and strategy falls on one person. Can't build and market simultaneously. Ideas move to execution slowly.</p>
+                        </div>
+                        
+                        <div class="constraint-card reveal">
+                            <div class="constraint-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="3" y1="9" x2="21" y2="9"/>
+                                    <line x1="9" y1="21" x2="9" y2="9"/>
+                                </svg>
+                            </div>
+                            <h3>Free Infrastructure</h3>
+                            <p>Currently at tirenify.netlify.app. Using free hosting with limited features. No custom domain — looks amateur to potential users and limits professional appearance.</p>
+                        </div>
+                        
+                        <div class="constraint-card reveal">
+                            <div class="constraint-icon">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                                    <polyline points="2 17 12 22 22 17"/>
+                                    <polyline points="2 12 12 17 22 12"/>
+                                </svg>
+                            </div>
+                            <h3>No Paid Tools</h3>
+                            <p>Using free Claude tier with limited tokens. Free tier of every tool. Can't invest in faster services. Development iteration is slow — every feature takes longer.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="constraints-summary reveal">
+                        <p>
+                            None of these are insurmountable. But together, they create artificial constraints. 
+                            <strong>Capital removes these bottlenecks.</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Capital Would Unlock Section -->
+        <section id="possibilities" class="section possibilities-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">The Opportunity</span>
+                    <h2 class="section-title">What Capital Would Unlock</h2>
+                </div>
+                
+                <div class="possibilities-content">
+                    <div class="possibilities-intro reveal">
+                        <p class="lead">
+                            Tirenify is ready to scale. The only missing ingredient is capital. 
+                            With it: continental security platform in 6 months. Without it: same destination, but 12+ months away.
+                        </p>
+                    </div>
+                    
+                    <div class="possibilities-grid">
+                        <div class="possibility-card reveal">
+                            <div class="possibility-number">01</div>
+                            <h3>Professional Domain + Branding</h3>
+                            <p>Custom domain (not .netlify.app), professional email, paid hosting with better performance, proper SSL and global CDN.</p>
+                            <div class="possibility-impact">
+                                <strong>User Trust:</strong> "This is a real company, not a side project"
                             </div>
                         </div>
+                        
+                        <div class="possibility-card reveal">
+                            <div class="possibility-number">02</div>
+                            <h3>Faster User Acquisition</h3>
+                            <p>Paid ads on platforms where African users are, strategic partnerships with tech communities, user referral incentives, targeted outreach.</p>
+                            <div class="possibility-impact">
+                                <strong>Growth:</strong> From organic-only to 100+ users per week
+                            </div>
+                        </div>
+                        
+                        <div class="possibility-card reveal">
+                            <div class="possibility-number">03</div>
+                            <h3>Paid Tools for Faster Iteration</h3>
+                            <p>Claude Pro or paid tier (10x more tokens), paid analytics platforms, professional monitoring, development tools that reduce friction.</p>
+                            <div class="possibility-impact">
+                                <strong>Speed:</strong> Weeks of work become days
+                            </div>
+                        </div>
+                        
+                        <div class="possibility-card reveal">
+                            <div class="possibility-number">04</div>
+                            <h3>Hire Korede Full-Time</h3>
+                            <p>Korede is identified and technically ready. Currently can't hire (no salary to offer). With capital: immediately moves to full-time development.</p>
+                            <div class="possibility-impact">
+                                <strong>Impact:</strong> Phase 2 development accelerates 10x
+                            </div>
+                        </div>
+                        
+                        <div class="possibility-card reveal">
+                            <div class="possibility-number">05</div>
+                            <h3>6-Month Runway to Scale</h3>
+                            <p>Time to build Phase 2 properly, validate with 1000+ active users, find product-market fit across African markets, plan Phase 3 and beyond.</p>
+                            <div class="possibility-impact">
+                                <strong>Result:</strong> From MVP to validated, scaled platform
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="possibilities-summary reveal">
+                        <p>
+                            With capital: Phase 2 launches within 6 months.<br>
+                            Without capital: same destination, 12+ months away.<br>
+                            <strong>Digital security in Africa shouldn't wait.</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Ask Section -->
+        <section id="the-ask" class="section ask-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">The Partnership</span>
+                    <h2 class="section-title">The Ask</h2>
+                </div>
+                
+                <div class="ask-content">
+                    <div class="ask-intro reveal">
+                        <p class="lead">
+                            We're looking for capital to unlock Tirenify's potential. 
+                            Not a specific number. Not a rigid structure.
+                        </p>
+                        <p>
+                            We're looking for someone who believes in what we're building 
+                            and wants to help us build it faster.
+                        </p>
+                    </div>
+                    
+                    <div class="ask-details reveal">
+                        <div class="ask-item">
+                            <div class="ask-item-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                            </div>
+                            <div class="ask-item-content">
+                                <h4>What We Need</h4>
+                                <p>Capital to remove infrastructure constraints, scale user acquisition, bring Korede on full-time, and accelerate Phase 2 development.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="ask-item">
+                            <div class="ask-item-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </div>
+                            <div class="ask-item-content">
+                                <h4>Investment Structure</h4>
+                                <p>We're flexible. Your typical model is 5% equity. We're open to that. Or convertible notes. Or partnership structures. Whatever aligns with your approach.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="ask-item">
+                            <div class="ask-item-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div class="ask-item-content">
+                                <h4>The Real Ask</h4>
+                                <p>Belief in what we're building, financial backing to prove that belief, mentorship from someone who's done this before, and connection to network if appropriate.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ask-summary reveal">
+                        <p>
+                            Whether it's 5% or another structure 
+                            the important part is alignment. If you believe in Tirenify, 
+                            let's talk about the right way to partner.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -418,14 +693,13 @@
             <div class="container">
                 <div class="section-header">
                     <span class="section-label">The Team</span>
-                    <h2 class="section-title">Not Alone in This</h2>
+                    <h2 class="section-title">Ready to Execute</h2>
                 </div>
                 
                 <div class="team-content">
                     <div class="team-intro reveal">
                         <p class="lead">
-                            This isn't a solo founder project. There is <strong>trusted technical talent</strong> 
-                            ready and available. The constraint isn't talent — it's resources.
+                            Tirenify isn't waiting on talent. It's waiting on capital.
                         </p>
                     </div>
                     
@@ -435,13 +709,18 @@
                                 <span>K</span>
                             </div>
                             <div class="member-info">
-                                <h3>Korey</h3>
-                                <p class="member-role">Backend Collaborator</p>
+                                <h3>Korede</h3>
+                                <p class="member-role">Backend Developer</p>
                                 <p class="member-desc">
-                                    Trusted technical talent ready to contribute full-time when resources permit. 
-                                    Korey shares the vision for what Tirenify can become and brings critical 
-                                    backend expertise to the team.
+                                    Korede is the backend engineer building Tirenify's infrastructure.
+                                    He's been collaborating on the product vision and is ready to transition 
+                                    to full-time development as soon as funding permits. He understands the 
+                                    mission deeply and brings critical technical expertise to the team.
                                 </p>
+                                <div class="member-status">
+                                    <span class="dot"></span>
+                                    <span>Ready to Start Immediately</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -449,45 +728,40 @@
                     <div class="team-message reveal">
                         <p>
                             When funding arrives, <strong>execution accelerates</strong>. 
-                            The team is ready to scale.
+                            No recruiting. No onboarding. Phase 2 development begins day one.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Philosophy Section -->
-        <section id="philosophy" class="section philosophy-section">
+        <!-- Video Section - Simon's Philosophy -->
+        <section id="video" class="section video-section">
             <div class="container">
                 <div class="section-header">
-                    <span class="section-label">Why Simon Squibb</span>
-                    <h2 class="section-title">Aligned Philosophy</h2>
+                    <span class="section-label">Proof of Concept</span>
+                    <h2 class="section-title">This Is Exactly What You Do</h2>
                 </div>
                 
-                <div class="philosophy-content">
-                    <div class="philosophy-text reveal">
+                <div class="video-content">
+                    <div class="video-intro reveal">
                         <p class="lead">
-                            I built this pitch specifically for you, Simon, because your approach to 
-                            entrepreneurship <strong>resonates deeply</strong> with how I think about building.
+                            The video below isn't about my vision for Tirenify.
                         </p>
                         <p>
-                            You encourage entrepreneurs to <strong>question conventional paths</strong>. 
-                            You back founders with <strong>bold visions</strong>. You invest in promising 
-                            businesses, often taking small equity positions. You support builders <strong>early 
-                            when it matters most</strong>.
+                            It's about <strong>your</strong> philosophy for investing in founders. 
+                            In it, you explain exactly how you invest: take 5% equity, provide capital 
+                            to founders with vision, back them early when it matters most.
                         </p>
                         <p>
-                            Tirenify isn't about maximum profit extraction. It's about building 
-                            <strong>infrastructure Africa deserves</strong>. Partnership now means being 
-                            part of something <strong>historic</strong> — establishing a trusted name in 
-                            African digital security.
+                            That's what Tirenify needs right now. That's exactly what I'm asking for.
                         </p>
                     </div>
                     
                     <div class="philosophy-video reveal">
                         <div class="video-container">
-                            <video id="philosophy-video" controls playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect fill='%230a0a0a' width='1920' height='1080'/%3E%3C/svg%3E">
-                                <source src="video.mp4" type="video/mp4">
+                            <video id="philosophy-video" controls playsinline muted poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect fill='%230a0a0a' width='1920' height='1080'/%3E%3C/svg%3E">
+                                <source src="video.mp4#t=16" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                             <div class="video-overlay">
@@ -498,7 +772,7 @@
                                 </button>
                             </div>
                         </div>
-                        <p class="video-caption">A message about the vision behind Tirenify</p>
+                        <p class="video-caption">When you watch this, you're watching yourself describe the investment Tirenify is ready for.</p>
                     </div>
                 </div>
             </div>
@@ -655,7 +929,7 @@
                     </div>
                     
                     <div class="closing-footer">
-                        <p>&copy; 2026 Tirenify. Built with conviction.</p>
+                        <p>&copy; 2024 Tirenify. Built with conviction.</p>
                     </div>
                 </div>
             </div>

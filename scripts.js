@@ -25,6 +25,7 @@
         loader: null,
         mainContent: null,
         body: null,
+        navbar: null,
         revealElements: null,
         fadeInElements: null,
         video: null,
@@ -40,6 +41,7 @@
     function init() {
         cacheElements();
         handleLoader();
+        setupNavbarScroll();
         setupScrollAnimations();
         setupVideoControls();
         setupSmoothScroll();
@@ -55,6 +57,7 @@
         elements.loader = document.getElementById('loader');
         elements.mainContent = document.getElementById('main-content');
         elements.body = document.body;
+        elements.navbar = document.querySelector('.navbar');
         elements.revealElements = document.querySelectorAll('.reveal');
         elements.fadeInElements = document.querySelectorAll('.fade-in');
         elements.video = document.getElementById('philosophy-video');
@@ -219,6 +222,32 @@
         }
     }
 
+    // ============================================
+    // NAVBAR SCROLL EFFECT
+    // ============================================
+    
+    function setupNavbarScroll() {
+        if (!elements.navbar) return;
+        
+        let lastScroll = 0;
+        const scrollThreshold = 50;
+        
+        const handleScroll = throttle(() => {
+            const currentScroll = window.pageYOffset;
+            
+            // Add/remove scrolled class based on scroll position
+            if (currentScroll > scrollThreshold) {
+                elements.navbar.classList.add('scrolled');
+            } else {
+                elements.navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        }, 100);
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    
     // ============================================
     // SMOOTH SCROLL FOR ANCHOR LINKS
     // ============================================
