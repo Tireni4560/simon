@@ -1,6 +1,6 @@
 /**
- * Tirenify Pitch - Interactive Animations & Functionality
- * Premium scroll-triggered animations and video controls
+ * Tirenify Pitch - Premium Interactive Experience
+ * Features: Parallax, Particles, Scroll Animations, Video Controls
  */
 
 (function() {
@@ -11,14 +11,16 @@
     // ============================================
     
     const CONFIG = {
-        loaderDuration: 3000,        // Time before loader hides (ms)
-        intersectionThreshold: 0.15, // Trigger point for reveal animations
-        scrollSmoothness: 0.1,       // For custom scroll effects (if needed)
-        videoAutoplayDelay: 500,     // Delay before checking video autoplay
+        loaderDuration: 2000,
+        intersectionThreshold: 0.12,
+        scrollThreshold: 50,
+        parallaxEnabled: true,
+        particleCount: 30,
+        videoAutoplayDelay: 500,
     };
 
     // ============================================
-    // DOM ELEMENTS
+    // DOM ELEMENTS CACHE
     // ============================================
     
     const elements = {
@@ -27,12 +29,19 @@
         body: null,
         navbar: null,
         revealElements: null,
-        fadeInElements: null,
         video: null,
         playBtn: null,
         videoOverlay: null,
-        roadmapItems: null,
+        particles: null,
+        heroGradients: null,
     };
+
+    // ============================================
+    // STATE
+    // ============================================
+    
+    let scrollY = 0;
+    let ticking = false;
 
     // ============================================
     // INITIALIZATION
@@ -40,14 +49,14 @@
     
     function init() {
         cacheElements();
+        createParticles();
         handleLoader();
-        setupNavbarScroll();
+        setupEventListeners();
         setupScrollAnimations();
         setupVideoControls();
         setupSmoothScroll();
-        setupRoadmapObserver();
         
-        // Add loaded class to body after everything is ready
+        // Add loaded class after everything is ready
         setTimeout(() => {
             elements.body.classList.add('loaded');
         }, 100);
@@ -57,28 +66,92 @@
         elements.loader = document.getElementById('loader');
         elements.mainContent = document.getElementById('main-content');
         elements.body = document.body;
-        elements.navbar = document.querySelector('.navbar');
+        elements.navbar = document.getElementById('navbar');
         elements.revealElements = document.querySelectorAll('.reveal');
-        elements.fadeInElements = document.querySelectorAll('.fade-in');
         elements.video = document.getElementById('philosophy-video');
         elements.playBtn = document.getElementById('play-btn');
-        elements.videoOverlay = document.querySelector('.video-overlay');
-        elements.roadmapItems = document.querySelectorAll('.roadmap-item');
+        elements.videoOverlay = document.getElementById('video-overlay');
+        elements.particles = document.getElementById('particles');
+        elements.heroGradients = document.querySelectorAll('.hero-gradient');
     }
 
     // ============================================
-    // LOADER ANIMATION
+    // PARTICLE SYSTEM
+    // ============================================
+    
+    function createParticles() {
+        if (!elements.particles) return;
+        
+        const container = elements.particles;
+        const count = CONFIG.particleCount;
+        
+        for (let i = 0; i < count; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random positioning
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const size = Math.random() * 3 + 1;
+            const duration = Math.random() * 20 + 10;
+            const delay = Math.random() * 10;
+            const opacity = Math.random() * 0.5 + 0.1;
+            
+            particle.style.cssText = `
+                position: absolute;
+                left: ${x}%;
+                top: ${y}%;
+                width: ${size}px;
+                height: ${size}px;
+                background: ${Math.random() > 0.5 ? 'var(--accent-primary)' : 'var(--accent-secondary)'};
+                border-radius: 50%;
+                opacity: ${opacity};
+                animation: particleFloat ${duration}s ease-in-out ${delay}s infinite;
+                pointer-events: none;
+            `;
+            
+            container.appendChild(particle);
+        }
+        
+        // Add particle animation keyframes
+        if (!document.getElementById('particle-styles')) {
+            const style = document.createElement('style');
+            style.id = 'particle-styles';
+            style.textContent = `
+                @keyframes particleFloat {
+                    0%, 100% {
+                        transform: translate(0, 0) scale(1);
+                        opacity: var(--particle-opacity, 0.3);
+                    }
+                    25% {
+                        transform: translate(${Math.random() > 0.5 ? '' : '-'}20px, -30px) scale(1.2);
+                    }
+                    50% {
+                        transform: translate(${Math.random() > 0.5 ? '' : '-'}40px, 20px) scale(0.8);
+                        opacity: 0.1;
+                    }
+                    75% {
+                        transform: translate(${Math.random() > 0.5 ? '' : '-'}10px, -10px) scale(1.1);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+
+    // ============================================
+    // LOADER
     // ============================================
     
     function handleLoader() {
-        // Wait for loader animation to complete
         setTimeout(() => {
             if (elements.loader) {
                 elements.loader.classList.add('hidden');
-                elements.mainContent.classList.remove('hidden');
+                
+                // Enable body scroll
                 elements.body.classList.remove('hidden');
                 
-                // Trigger initial animations after loader
+                // Trigger initial animations
                 setTimeout(() => {
                     triggerInitialAnimations();
                 }, 400);
@@ -87,18 +160,125 @@
     }
 
     function triggerInitialAnimations() {
-        // The hero section elements have CSS animations with delays
-        // This function can trigger additional JS animations if needed
-        const heroElements = document.querySelectorAll('.hero-section .fade-in');
+        // Hero elements already have CSS animations
+        // This can trigger any additional JS animations if needed
+        const heroElements = document.querySelectorAll('.hero-section .reveal');
         heroElements.forEach(el => el.classList.add('visible'));
     }
 
     // ============================================
-    // SCROLL ANIMATIONS (Intersection Observer)
+    // EVENT LISTENERS
+    // ============================================
+    
+    function setupEventListeners() {
+        // Scroll handling with requestAnimationFrame
+        window.addEventListener('scroll', onScroll, { passive: true });
+        
+        // Resize handling
+        window.addEventListener('resize', debounce(onResize, 250));
+        
+        // Navbar scroll effect
+        setupNavbarScroll();
+    }
+
+    function onScroll() {
+        scrollY = window.pageYOffset;
+        
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateParallax();
+                updateNavbar();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    function onResize() {i
+        // Recalculate any layout-dependent values
+    }
+
+    // ============================================
+    // NAVBAR SCROLL EFFECT
+    // ============================================
+    
+    function setupNavbarScroll() {
+        if (!elements.navbar) return;
+        
+        updateNavbar();
+    }
+
+    function updateNavbar() {
+        if (!elements.navbar) return;
+        
+        if (scrollY > CONFIG.scrollThreshold) {
+            elements.navbar.classList.add('scrolled');
+        } else {
+            elements.navbar.classList.remove('scrolled');
+        }
+    }
+
+    // ============================================
+    // PARALLAX EFFECTS
+    // ============================================
+    
+    function updateParallax() {
+        if (!CONFIG.parallaxEnabled) return;
+        
+        // Only apply on desktop
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            return;
+        }
+        
+        // Hero gradients parallax
+        if (elements.heroGradients) {
+            elements.heroGradients.forEach((gradient, index) => {
+                const speed = 0.1 + (index * 0.05);
+                const yPos = scrollY * speed;
+                gradient.style.transform = `translateY(${yPos}px)`;
+            });
+        }
+        
+        // Hero grid parallax
+        const heroGrid = document.querySelector('.hero-grid');
+        if (heroGrid) {
+            heroGrid.style.transform = `translateY(${scrollY * 0.15}px)`;
+        }
+        
+        // Section background parallax
+        document.querySelectorAll('[data-parallax]').forEach(el => {
+            const speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
+            const rect = el.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const offset = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+                const translateY = (offset - 0.5) * 100 * speed;
+                el.style.transform = `translateY(${translateY}px)`;
+            }
+        });
+    }
+
+    // ============================================
+    // SCROLL REVEAL ANIMATIONS
     // ============================================
     
     function setupScrollAnimations() {
-        // Create intersection observer for reveal animations
+        if (!('IntersectionObserver' in window)) {
+            // Fallback: show all elements immediately
+            elements.revealElements.forEach(el => el.classList.add('visible'));
+            return;
+        }
+        
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            elements.revealElements.forEach(el => {
+                el.classList.add('visible');
+                el.style.transition = 'none';
+            });
+            return;
+        }
+        
         const revealObserver = new IntersectionObserver(
             handleRevealIntersection,
             {
@@ -107,8 +287,7 @@
                 threshold: CONFIG.intersectionThreshold,
             }
         );
-
-        // Observe all reveal elements
+        
         elements.revealElements.forEach(el => {
             revealObserver.observe(el);
         });
@@ -119,45 +298,8 @@
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 
-                // Optionally unobserve after reveal (for one-time animation)
+                // Optional: unobserve after reveal for one-time animation
                 // observer.unobserve(entry.target);
-            }
-        });
-    }
-
-    // ============================================
-    // ROADMAP OBSERVER
-    // ============================================
-    
-    function setupRoadmapObserver() {
-        const roadmapObserver = new IntersectionObserver(
-            handleRoadmapIntersection,
-            {
-                root: null,
-                rootMargin: '0px 0px -50% 0px',
-                threshold: 0.5,
-            }
-        );
-
-        elements.roadmapItems.forEach(item => {
-            roadmapObserver.observe(item);
-        });
-    }
-
-    function handleRoadmapIntersection(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                const marker = entry.target.querySelector('.roadmap-marker');
-                if (marker) {
-                    marker.classList.add('active');
-                }
-            } else {
-                entry.target.classList.remove('active');
-                const marker = entry.target.querySelector('.roadmap-marker');
-                if (marker) {
-                    marker.classList.remove('active');
-                }
             }
         });
     }
@@ -168,30 +310,54 @@
     
     function setupVideoControls() {
         if (!elements.video || !elements.playBtn) return;
-
-        // Play button click handler
+        
+        prepareVideoPlayback();
+        
+        // Play button click
         elements.playBtn.addEventListener('click', handleVideoPlay);
         
-        // Video click to pause/play
+        // Video click to toggle play/pause
         elements.video.addEventListener('click', toggleVideoPlay);
         
-        // Handle video end
+        // Video ended
         elements.video.addEventListener('ended', handleVideoEnd);
         
-        // Handle video errors gracefully
+        // Video errors
         elements.video.addEventListener('error', handleVideoError);
     }
 
+    function prepareVideoPlayback() {
+        if (!elements.video) return;
+        
+        // Set start time and ensure audio is on
+        elements.video.currentTime = 15.7;
+        elements.video.muted = false;
+        elements.video.autoplay = true;
+        
+        elements.video.addEventListener('loadedmetadata', () => {
+            if (elements.video.currentTime < 15.7) {
+                elements.video.currentTime = 15.7;
+            }
+        });
+        
+        // Try autoplay
+        elements.video.play().then(() => {
+            hideVideoOverlay();
+        }).catch(error => {
+            console.warn('Video autoplay failed:', error);
+            // Show overlay for manual play
+            showVideoOverlay();
+        });
+    }
+
     function handleVideoPlay() {
-        if (elements.video && elements.videoOverlay) {
-            elements.video.play().then(() => {
-                elements.videoOverlay.classList.add('hidden');
-            }).catch(error => {
-                console.warn('Video autoplay failed:', error);
-                // Video might not be available, hide overlay gracefully
-                elements.videoOverlay.classList.add('hidden');
-            });
-        }
+        if (!elements.video) return;
+        
+        elements.video.play().then(() => {
+            hideVideoOverlay();
+        }).catch(error => {
+            console.warn('Video play failed:', error);
+        });
     }
 
     function toggleVideoPlay() {
@@ -199,79 +365,56 @@
         
         if (elements.video.paused) {
             elements.video.play();
-            if (elements.videoOverlay) {
-                elements.videoOverlay.classList.add('hidden');
-            }
+            hideVideoOverlay();
         } else {
             elements.video.pause();
         }
     }
 
     function handleVideoEnd() {
-        // Show play button again when video ends
+        showVideoOverlay();
+    }
+
+    function handleVideoError(e) {
+        console.warn('Video failed to load:', e);
+        showVideoOverlay();
+    }
+
+    function showVideoOverlay() {
         if (elements.videoOverlay) {
             elements.videoOverlay.classList.remove('hidden');
         }
     }
 
-    function handleVideoError(e) {
-        console.warn('Video failed to load:', e);
-        // Hide overlay so user can see video element's fallback message
+    function hideVideoOverlay() {
         if (elements.videoOverlay) {
             elements.videoOverlay.classList.add('hidden');
         }
     }
 
     // ============================================
-    // NAVBAR SCROLL EFFECT
-    // ============================================
-    
-    function setupNavbarScroll() {
-        if (!elements.navbar) return;
-        
-        let lastScroll = 0;
-        const scrollThreshold = 50;
-        
-        const handleScroll = throttle(() => {
-            const currentScroll = window.pageYOffset;
-            
-            // Add/remove scrolled class based on scroll position
-            if (currentScroll > scrollThreshold) {
-                elements.navbar.classList.add('scrolled');
-            } else {
-                elements.navbar.classList.remove('scrolled');
-            }
-            
-            lastScroll = currentScroll;
-        }, 100);
-        
-        window.addEventListener('scroll', handleScroll, { passive: true });
-    }
-    
-    // ============================================
     // SMOOTH SCROLL FOR ANCHOR LINKS
     // ============================================
     
     function setupSmoothScroll() {
-        // Handle all anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
                 if (href === '#') return;
                 
                 const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
+                if (!target) return;
+                
+                e.preventDefault();
+                
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
             });
         });
     }
@@ -280,9 +423,6 @@
     // UTILITY FUNCTIONS
     // ============================================
     
-    /**
-     * Debounce function for performance optimization
-     */
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
@@ -295,9 +435,6 @@
         };
     }
 
-    /**
-     * Throttle function for scroll events
-     */
     function throttle(func, limit) {
         let inThrottle;
         return function(...args) {
@@ -309,9 +446,14 @@
         };
     }
 
-    /**
-     * Check if element is in viewport
-     */
+    function lerp(start, end, factor) {
+        return start + (end - start) * factor;
+    }
+
+    function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+    }
+
     function isInViewport(element, threshold = 0) {
         const rect = element.getBoundingClientRect();
         return (
@@ -322,70 +464,25 @@
         );
     }
 
-    /**
-     * Lerp (Linear Interpolation) for smooth animations
-     */
-    function lerp(start, end, factor) {
-        return start + (end - start) * factor;
-    }
-
-    /**
-     * Clamp a value between min and max
-     */
-    function clamp(value, min, max) {
-        return Math.min(Math.max(value, min), max);
-    }
-
     // ============================================
-    // PARALLAX EFFECTS (Optional Enhancement)
-    // ============================================
-    
-    function setupParallax() {
-        // Only enable on non-mobile devices for performance
-        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-            return;
-        }
-
-        const parallaxElements = document.querySelectorAll('[data-parallax]');
-        
-        if (parallaxElements.length === 0) return;
-
-        const handleParallax = throttle(() => {
-            parallaxElements.forEach(el => {
-                const speed = parseFloat(el.getAttribute('data-parallax')) || 0.5;
-                const rect = el.getBoundingClientRect();
-                const visible = rect.top < window.innerHeight && rect.bottom > 0;
-                
-                if (visible) {
-                    const offset = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-                    const translateY = (offset - 0.5) * 100 * speed;
-                    el.style.transform = `translateY(${translateY}px)`;
-                }
-            });
-        }, 16); // ~60fps
-
-        window.addEventListener('scroll', handleParallax, { passive: true });
-    }
-
-    // ============================================
-    // ACCESSIBILITY ENHANCEMENTS
+    // ACCESSIBILITY
     // ============================================
     
     function setupAccessibility() {
-        // Handle keyboard navigation for custom interactive elements
+        // Handle keyboard navigation
         document.addEventListener('keydown', (e) => {
-            // Escape key to close any open modals/overlays
             if (e.key === 'Escape') {
-                if (elements.videoOverlay && !elements.videoOverlay.classList.contains('hidden')) {
-                    // Video overlay is already visible, do nothing
+                // Close any open overlays if needed
+                if (elements.video && !elements.video.paused) {
+                    elements.video.pause();
+                    showVideoOverlay();
                 }
             }
         });
-
+        
         // Ensure all interactive elements are focusable
         const interactiveElements = document.querySelectorAll('a, button, [tabindex]');
         interactiveElements.forEach(el => {
-            // Add focus-visible polyfill if needed
             if (!el.classList.contains('focus-visible-polyfill')) {
                 el.classList.add('focus-visible-polyfill');
             }
@@ -393,41 +490,16 @@
     }
 
     // ============================================
-    // PERFORMANCE MONITORING (Development)
-    // ============================================
-    
-    function setupPerformanceMonitoring() {
-        // Only in development
-        if (process && process.env && process.env.NODE_ENV !== 'development') {
-            return;
-        }
-
-        // Log performance metrics
-        if (window.performance && window.performance.timing) {
-            window.addEventListener('load', () => {
-                const timing = window.performance.timing;
-                const loadTime = timing.loadEventEnd - timing.navigationStart;
-                console.log(`Page load time: ${loadTime}ms`);
-            });
-        }
-    }
-
-    // ============================================
     // ANIMATION FALLBACKS
     // ============================================
     
     function setupAnimationFallbacks() {
-        // Check if browser supports IntersectionObserver
         if (!('IntersectionObserver' in window)) {
-            // Fallback: show all elements immediately
             elements.revealElements.forEach(el => el.classList.add('visible'));
-            elements.fadeInElements.forEach(el => el.classList.add('visible'));
         }
-
-        // Check for reduced motion preference
+        
         const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         if (mediaQuery.matches) {
-            // Disable all animations
             elements.revealElements.forEach(el => {
                 el.style.transition = 'none';
                 el.classList.add('visible');
@@ -436,7 +508,7 @@
     }
 
     // ============================================
-    // INITIALIZE WHEN DOM IS READY
+    // INITIALIZE
     // ============================================
     
     if (document.readyState === 'loading') {
@@ -444,8 +516,8 @@
     } else {
         init();
     }
-
-    // Also run fallbacks immediately
+    
+    // Run fallbacks immediately
     setupAnimationFallbacks();
     setupAccessibility();
 
@@ -457,21 +529,17 @@
 
 window.addEventListener('error', (event) => {
     console.error('Global error:', event.error);
-    // Don't let errors break the user experience
 });
 
 window.addEventListener('unhandledrejection', (event) => {
     console.error('Unhandled promise rejection:', event.reason);
-    // Don't let unhandled rejections break the user experience
 });
 
 // ============================================
-// EXTERNAL API (for potential future use)
+// PUBLIC API (for debugging)
 // ============================================
 
-// Expose minimal API for debugging if needed
 window.TirenifyPitch = {
-    // Replay loader animation
     replayLoader: function() {
         const loader = document.getElementById('loader');
         const mainContent = document.getElementById('main-content');
@@ -483,11 +551,10 @@ window.TirenifyPitch = {
             setTimeout(() => {
                 loader.classList.add('hidden');
                 mainContent.classList.remove('hidden');
-            }, 3000);
+            }, CONFIG.loaderDuration);
         }
     },
     
-    // Trigger reveal for specific element
     reveal: function(selector) {
         const el = document.querySelector(selector);
         if (el) {
@@ -495,7 +562,6 @@ window.TirenifyPitch = {
         }
     },
     
-    // Get current scroll position as percentage
     getScrollProgress: function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
